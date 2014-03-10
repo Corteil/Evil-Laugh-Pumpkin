@@ -37,7 +37,7 @@
 
 // define pin 2
 
-#define PIN 2
+#define PIN 5
 
 // set Arduino audio
 
@@ -77,8 +77,8 @@ char charBuf[50];
  */
 // constants won't change. They're used here to 
 // set pin numbers:
-const int buttonPin = 18;    // the number of the pushbutton pin
-const int ledPin = 13;      // the number of the LED pin
+const int buttonPin = 2;    // the number of the pushbutton pin
+
 
 // Variables will change:
 int ledState = HIGH;         // the current state of the output pin
@@ -122,8 +122,8 @@ void setup() {
   Serial.println("Adafruit VS1053 Simple Test");
 
 
-  
-   musicPlayer.begin(); // initialise the music player
+
+  musicPlayer.begin(); // initialise the music player
   SD.begin(CARDCS);    // initialise the SD card
 
   // Set volume for left, right channels. lower numbers == louder volume!
@@ -135,13 +135,9 @@ void setup() {
   // If DREQ is on an interrupt pin (on uno, #2 or #3) we can do background
   // audio playing
   musicPlayer.useInterrupt(VS1053_FILEPLAYER_PIN_INT);  // DREQ int
-  
+
   // button setup
   pinMode(buttonPin, INPUT);
-  pinMode(ledPin, OUTPUT);
-
-  // set initial LED state
-  digitalWrite(ledPin, ledState);
   
   // candle setup
 
@@ -155,34 +151,34 @@ void setup() {
 
   strip.begin();
   strip.show();
-  
+
   // start
-  
-  attachInterrupt(5, evil, RISING);
+
+  attachInterrupt(0, evil, RISING);
 
 }
 
 void loop() {
-  
-   // let there be light
-   Serial.println("light start");
-   burn(10);  
-   flicker(5);
-   burn(8);
-   flutter(6);
-   burn(3);
-   on(10);
-   burn(10);
-   flicker(10);
-   Serial.println("light finish");
+
+  // let there be light
+  Serial.println("light start");
+  burn(10);  
+  flicker(5);
+  burn(8);
+  flutter(6);
+  burn(3);
+  on(10);
+  burn(10);
+  flicker(10);
+  Serial.println("light finish");
 }
 
 void evil(){
-  detachInterrupt(5);
+  detachInterrupt(0);
   green();
   selectTrack();
   delay(20000);
-  attachInterrupt(5, evil, RISING);
+  attachInterrupt(0, evil, RISING);
 }
 
 void green(){
@@ -190,7 +186,7 @@ void green(){
     strip.setPixelColor(i, 0, 255, 0);
   }
   strip.show();    
-  
+
 }
 
 void selectTrack(){
@@ -297,5 +293,6 @@ void flutter(int f) {
   fire(burnLow);
   fire(burnLow);
 }
+
 
 
