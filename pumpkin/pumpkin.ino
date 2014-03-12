@@ -37,7 +37,7 @@
 
 // define pin 2
 
-#define PIN 5
+#define PIN 6
 
 // set Arduino audio
 
@@ -154,7 +154,7 @@ void setup() {
 
   // start
 
-  attachInterrupt(0, evil, RISING);
+  attachInterrupt(0, evil, LOW);
 
 }
 
@@ -177,8 +177,8 @@ void evil(){
   detachInterrupt(0);
   green();
   selectTrack();
-  delay(20000);
-  attachInterrupt(0, evil, RISING);
+  delay(2000);
+  attachInterrupt(0, evil, FALLING);
 }
 
 void green(){
